@@ -1,65 +1,68 @@
 # 🐷🎉 Peppa's Party Time!
 
-A cheerful 3D browser party game for kids, built with [Three.js](https://threejs.org/).
-Run around a sunny garden as a party pig in a red dress, collect all 10 party treats,
-splash in muddy puddles, and hit the big DANCE button. Collect everything to trigger
-**PARTY TIME** — fireworks, confetti rain, and a disco ball!
+A pastel, Apple-Arcade-style 3D birthday party game with learning mini-games,
+built with **React**, **React Three Fiber**, **Three.js**, **Zustand** and the
+**Web Audio API**. Made for a 6-year-old — no losing, no timers, just party fun.
 
-> ⚠️ **Unofficial fan game** made for personal, non-commercial use. All artwork is
-> original and generated in code — no copyrighted images, music, or assets are used.
-> "Peppa Pig" is a trademark of Hasbro / Entertainment One; this project is not
-> affiliated with or endorsed by them.
+> ⚠️ **Unofficial fan game** for personal, non-commercial use. All 3D art is
+> procedural geometry and all sound is synthesized in code — no copyrighted
+> assets. "Peppa Pig" is a trademark of Hasbro / Entertainment One; this
+> project is not affiliated with or endorsed by them.
 
-## 🎮 How to play
+## 🎮 Mini-games
 
-| Action | Desktop | Touch |
+| Mini-game | What happens | Learning |
 |---|---|---|
-| Move | Arrow keys or WASD | Pink joystick (bottom-left) |
-| Dance | Spacebar or 💃 button | 💃 button |
-| Music on/off | `M` or 🎵 button | 🎵 button |
+| 🎈 **Balloon Pop** | Tap floating balloons — elastic pop, confetti burst, ascending chime | Counting (big splash numbers + counter) |
+| 🎁 **Present Unboxing** | Tap a gift — lid springs off, a 3D toy floats out | Phonics card (P-I-G 🐷, D-U-C-K 🦆, B-A-L-L ⚽) |
+| 🍰 **Cake Decorating** | Tap Star / Heart / Candy to place spinning toppers | Creativity & fine motor |
+| 🕯️ **Candle Blowing** | Room dims, flames flicker — tap each flame out | Counting down, cause & effect, victory melody |
+| 🎉 **Celebration** | Screen-wide balloon cascade, 3D confetti rain, fanfare | Pure joy |
 
-- Collect all **10 treats** (cupcakes, presents, donuts) to start the party 🎆
-- Run through **muddy puddles** for a splashy surprise 💦
-- No losing, no timers — just party fun!
-
-## 🚀 Run it
-
-It's a fully static site — no build step.
-
-**Play online (GitHub Pages):** https://appforgelabs.github.io/PeppaPartyTime/
-
-**Run locally:**
+## 🚀 Run locally
 
 ```bash
-cd PeppaPartyTime
-python3 -m http.server 8000
-# open http://localhost:8000
+npm install
+npm run dev        # http://localhost:5173/PeppaPartyTime/
 ```
 
-(A local server is needed because the game uses ES modules; opening `index.html`
-directly via `file://` won't work.)
+Build & preview production:
 
-## ⚙️ Enabling GitHub Pages (one-time setup)
+```bash
+npm run build
+npm run preview
+```
 
-1. Go to **Settings → Pages** in this repo:
+## 🌐 Deploy to GitHub Pages (one-time setup)
+
+This repo ships with a GitHub Actions workflow (`.github/workflows/deploy.yml`)
+that builds the Vite app and publishes it on every push to `main`.
+
+1. Go to **Settings → Pages**:
    https://github.com/Appforgelabs/PeppaPartyTime/settings/pages
-2. Under **Build and deployment**, choose:
-   - Source: **Deploy from a branch**
-   - Branch: **main** · folder: **/ (root)** → **Save**
-3. Wait ~1 minute, then visit https://appforgelabs.github.io/PeppaPartyTime/
+2. Under **Build and deployment → Source**, choose **GitHub Actions**.
+3. Push to `main` (or run the workflow manually) — the game goes live at
+   **https://appforgelabs.github.io/PeppaPartyTime/**
 
-## 🗂️ Files
+> The `base: '/PeppaPartyTime/'` in `vite.config.js` must match the repo name.
 
-| File | Purpose |
-|---|---|
-| `index.html` | Page shell, UI overlay (title, stars, buttons, joystick), import map |
-| `main.js` | The whole game: 3D world, pig character, physics, particles, music & SFX |
-| `.nojekyll` | Tells GitHub Pages to serve files as-is |
+## 🗂️ Project structure
 
-## 🔧 Tech notes
-
-- Three.js loaded from CDN via an import map (`three@0.160.0`)
-- Pig, cake, trees, bunting, rainbow — all procedural Three.js geometry
-- Music and sound effects synthesized live with the Web Audio API
-  (an original melody — no copyrighted tunes)
-- Works on desktop and mobile browsers (touch joystick included)
+```
+├── index.html
+├── vite.config.js
+├── .github/workflows/deploy.yml   # auto-deploy to GitHub Pages
+└── src/
+    ├── main.jsx
+    ├── App.jsx
+    ├── styles.css                 # glassmorphic pastel HUD
+    ├── audio/soundEngine.js       # Web Audio API synth (no audio files)
+    ├── store/useGameStore.js      # zustand game state
+    └── components/
+        ├── CanvasContainer.jsx    # Canvas, lights, shadows, camera
+        ├── PartyScene.jsx         # garden, hills, cake, gift tables
+        ├── Balloons.jsx           # pop physics + <Burst/> particles
+        ├── PresentBox.jsx         # unboxing + procedural 3D toys
+        ├── CakeDecorations.jsx    # toppers + candle-blowing
+        └── UIOverlay.jsx          # glassmorphic HUD
+```
